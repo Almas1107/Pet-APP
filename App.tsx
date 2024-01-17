@@ -4,12 +4,14 @@ import {
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
-import { Dogs, Cats, DogPage, CatPage } from "./screens";
+import { Dogs, Cats, DogPage, CatPage, Piano } from "./screens";
 import { CatIcon, DogIcon } from "./icons";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 const HomeStack = () => {
   return (
@@ -27,34 +29,42 @@ const HomeStack2 = () => {
     </Stack.Navigator>
   );
 };
+const Tabs = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarActiveBackgroundColor: "#ececec",
+        headerShown: false,
+        tabBarItemStyle: { marginBottom: -20 },
+      }}
+    >
+      <Tab.Screen
+        name="Dogs"
+        component={HomeStack}
+        options={{
+          tabBarShowLabel: false,
+          tabBarIcon: () => <DogIcon size={40} />,
+        }}
+      />
+      <Tab.Screen
+        name="Cats"
+        component={HomeStack2}
+        options={{
+          tabBarShowLabel: false,
+          tabBarIcon: () => <CatIcon size={40} />,
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={{
-          tabBarActiveBackgroundColor: "#ececec",
-          headerShown: false,
-          tabBarItemStyle: { marginBottom: -20 },
-        }}
-      >
-        <Tab.Screen
-          name="Dogs"
-          component={HomeStack}
-          options={{
-            tabBarShowLabel: false,
-            tabBarIcon: () => <DogIcon size={40} />,
-          }}
-        />
-        <Tab.Screen
-          name="Cats"
-          component={HomeStack2}
-          options={{
-            tabBarShowLabel: false,
-            tabBarIcon: () => <CatIcon size={40} />,
-          }}
-        />
-      </Tab.Navigator>
+      <Drawer.Navigator>
+        <Drawer.Screen name="Tabs" component={Tabs} />
+        <Drawer.Screen name="Piano" component={Piano} />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
